@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Financial Vulnerability in the Philippines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 1211px;
+    height: 744px;
+    overflow: hidden;
+    background: #C03D0A;
+  }
+
+  .landing {
+    width: 1211px;
+    height: 744px;
+    background: #C03D0A;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .noise {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(0,0,0,0.28) 0%, transparent 100%),
+      radial-gradient(ellipse 40% 40% at 10% 0%, rgba(255,255,255,0.07) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .thin-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 36px 64px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .source-tag {
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+  }
+
+  .year-tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .hero {
+    text-align: center;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 12px;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 54px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+
+  .hero-rule {
+    width: 1px;
+    height: 32px;
+    background: rgba(255,255,255,0.25);
+    margin: 0 auto 14px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  .nav-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .nav-btn {
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 22px 24px 20px;
+    background: rgba(0,0,0,0.22);
+    overflow: hidden;
+  }
+
+  .btn-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .btn-num {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-weight: 400;
+    padding-top: 2px;
+  }
+
+  .btn-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c1 .btn-icon { background: rgba(232,168,100,0.15); }
+  .c2 .btn-icon { background: rgba(100,185,155,0.15); }
+  .c3 .btn-icon { background: rgba(100,165,210,0.15); }
+
+  .btn-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .btn-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .btn-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 14px;
+  }
+
+  .btn-cta {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .c1 .btn-cta { color: #E8A864; }
+  .c2 .btn-cta { color: #64B99B; }
+  .c3 .btn-cta { color: #64A5D2; }
+
+  .cta-line { height: 1px; width: 24px; border-radius: 1px; }
+  .c1 .cta-line { background: #E8A864; }
+  .c2 .cta-line { background: #64B99B; }
+  .c3 .cta-line { background: #64A5D2; }
+
+  .footnote {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .fn-item { display: flex; align-items: center; gap: 8px; }
+  .fn-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+  .fn-text { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.07em; }
+  .fn-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+<div class="landing">
+  <div class="noise"></div>
+  <div class="thin-lines"></div>
+  <div class="inner">
+
+    <div class="topbar">
+      <div class="source-tag">Philippine Statistics Authority · PSADA</div>
+      <div class="year-tag">2018 – 2024</div>
+    </div>
+
+    <div class="hero">
+      <span class="hero-label">A Data Story on</span>
+      <div class="hero-title">Financial Vulnerability<br>in the Philippines</div>
+      <div class="hero-rule"></div>
+      <div class="hero-sub">Select a dashboard below to explore the data. Each view presents a different lens on regional financial vulnerability across the archipelago.</div>
+    </div>
+
+    <div class="nav-row">
+
+      <div class="nav-btn c1">
+        <div class="btn-top">
+          <div class="btn-num">01</div>
+          <div class="btn-icon">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+              <rect x="0" y="0" width="6" height="6" rx="1" fill="#E8A864" opacity=".9"/>
+              <rect x="8" y="0" width="6" height="2.5" rx="0.8" fill="#E8A864" opacity=".5"/>
+              <rect x="8" y="4" width="6" height="2" rx="0.8" fill="#E8A864" opacity=".3"/>
+              <rect x="0" y="8" width="14" height="6" rx="1" fill="#E8A864" opacity=".3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="btn-title">National Overview &amp; KPI Indicators</div>
+        <div class="btn-desc">You will see the national mean scores for sensitivity, exposure, and resilience — alongside age distribution, employment status breakdown, and the RFVI trend from 2018 to 2024.</div>
+        <div class="btn-footer">
+          <div class="cta-line"></div>
+          <span class="btn-cta">View Dashboard</span>
+        </div>
+      </div>
+
+      <div class="nav-btn c2">
+        <div class="btn-top">
+          <div class="btn-num">02</div>
+          <div class="btn-icon">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+              <rect x="4" y="0" width="10" height="2.2" rx="0.8" fill="#64B99B" opacity=".9"/>
+              <rect x="2" y="3.8" width="12" height="2.2" rx="0.8" fill="#64B99B" opacity=".7"/>
+              <rect x="3" y="7.6" width="11" height="2.2" rx="0.8" fill="#64B99B" opacity=".5"/>
+              <rect x="1" y="11.4" width="9" height="2.2" rx="0.8" fill="#64B99B" opacity=".35"/>
+            </svg>
+          </div>
+        </div>
+        <div class="btn-title">Geographic RFVI Rankings</div>
+        <div class="btn-desc">You will see RFVI scores ranked by region, province, or city/municipality in a horizontal bar chart — with filters for survey year and month to explore how vulnerability shifts across time and geography.</div>
+        <div class="btn-footer">
+          <div class="cta-line"></div>
+          <span class="btn-cta">View Dashboard</span>
+        </div>
+      </div>
+
+      <div class="nav-btn c3">
+        <div class="btn-top">
+          <div class="btn-num">03</div>
+          <div class="btn-icon">
+            <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+              <circle cx="3.5" cy="8" r="2.5" fill="#64A5D2" opacity=".85"/>
+              <circle cx="9" cy="4" r="1.8" fill="#64A5D2" opacity=".55"/>
+              <circle cx="11" cy="10.5" r="1.4" fill="#64A5D2" opacity=".4"/>
+              <circle cx="6" cy="11" r="1" fill="#64A5D2" opacity=".5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="btn-title">Vulnerability Cluster Analysis</div>
+        <div class="btn-desc">You will see municipalities plotted by their mean resilience and sensitivity scores, grouped into three clusters — Balanced, Exposure-Weighted, and Sensitivity-Weighted — to identify vulnerability patterns across areas.</div>
+        <div class="btn-footer">
+          <div class="cta-line"></div>
+          <span class="btn-cta">View Dashboard</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footnote">
+      <div class="fn-item"><div class="fn-dot"></div><span class="fn-text">Source: PSA Data Repository (PSADA)</span></div>
+      <div class="fn-sep"></div>
+      <div class="fn-item"><div class="fn-dot"></div><span class="fn-text">17 Regions · All Provinces</span></div>
+      <div class="fn-sep"></div>
+      <div class="fn-item"><div class="fn-dot"></div><span class="fn-text">Regional Financial Vulnerability Index</span></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
