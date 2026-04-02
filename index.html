@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Vulnerability in the Philippines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,700;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #BF3C0A;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; color: #fff; }
+
+    /* ── BACKGROUND ── */
+    .bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+
+    .bg-gradient {
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 110%, rgba(0,0,0,0.38) 0%, transparent 68%),
+        radial-gradient(ellipse 50% 45% at 2% 0%, rgba(255,160,60,0.1) 0%, transparent 52%),
+        linear-gradient(150deg, #CA4010 0%, #A83208 60%, #8C2405 100%);
+    }
+
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 56px 56px;
+      animation: gridDrift 40s linear infinite;
+    }
+
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 56px 56px; }
+    }
+
+    /* ── PAGE ── */
+    .page {
+      position: relative; z-index: 1;
+      width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 48px 20px;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      opacity: 0;
+      animation: fadeDown 0.55s ease 0.05s forwards;
+    }
+
+    .source-badge {
+      font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      font-weight: 400;
+    }
+
+    .year-badge {
+      font-size: 11px; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 5px 14px; border-radius: 20px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-style: italic; font-weight: 300;
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.55s ease 0.2s forwards;
+    }
+
+    .e-rule { width: 28px; height: 1px; background: rgba(255,255,255,0.25); }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 5.5vw, 72px);
+      font-weight: 700; line-height: 1.07;
+      letter-spacing: -0.015em; color: #fff;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.32s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic; font-weight: 500;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hero-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.44s forwards;
+    }
+
+    .d-line {
+      width: 36px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22));
+    }
+    .d-line.r { background: linear-gradient(90deg, rgba(255,255,255,0.22), transparent); }
+
+    .d-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      animation: dotPulse 2.8s ease-in-out infinite;
+    }
+
+    .hero-sub {
+      font-size: clamp(13px, 1.3vw, 16px);
+      color: rgba(255,255,255,0.55); line-height: 1.7;
+      max-width: 500px; font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.55s ease 0.54s forwards;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      padding: 20px 22px 18px;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      opacity: 0;
+      transition:
+        transform 0.26s cubic-bezier(0.34,1.5,0.64,1),
+        border-color 0.2s,
+        background 0.2s;
+    }
+
+    .card:nth-child(1) { animation: cardIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.68s forwards; }
+    .card:nth-child(2) { animation: cardIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.78s forwards; }
+    .card:nth-child(3) { animation: cardIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.88s forwards; }
+    .card:nth-child(4) { animation: cardIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.98s forwards; }
+
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%; height: 2px;
+      border-radius: 0 0 4px 4px;
+      opacity: 0;
+      transition: opacity 0.22s, left 0.22s, right 0.22s;
+    }
+
+    .card-1::before { background: #E8A864; }
+    .card-2::before { background: #64B99B; }
+    .card-3::before { background: #64A5D2; }
+    .card-4::before { background: #C882BE; }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(0,0,0,0.3);
+      border-color: rgba(255,255,255,0.0);
+    }
+
+    .card:hover::before { opacity: 1; left: 0; right: 0; }
+
+    .card-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .card-num {
+      font-size: 11px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      font-weight: 400;
+    }
+
+    .card-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.26s cubic-bezier(0.34,1.5,0.64,1);
+    }
+
+    .card:hover .card-icon { transform: scale(1.12) rotate(-3deg); }
+
+    .card-1 .card-icon { background: rgba(232,168,100,0.12); border: 1px solid rgba(232,168,100,0.22); }
+    .card-2 .card-icon { background: rgba(100,185,155,0.12); border: 1px solid rgba(100,185,155,0.22); }
+    .card-3 .card-icon { background: rgba(100,165,210,0.12); border: 1px solid rgba(100,165,210,0.22); }
+    .card-4 .card-icon { background: rgba(200,130,190,0.12); border: 1px solid rgba(200,130,190,0.22); }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 500; color: #fff; line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5); line-height: 1.65;
+      font-weight: 300; flex: 1;
+      margin-bottom: 14px;
+      transition: color 0.2s;
+    }
+
+    .card:hover .card-desc { color: rgba(255,255,255,0.65); }
+
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 10px; letter-spacing: 0.04em;
+      padding: 3px 9px; border-radius: 20px;
+      transition: background 0.18s;
+    }
+
+    .card-1 .tag { background: rgba(232,168,100,0.1); color: rgba(232,168,100,0.85); border: 1px solid rgba(232,168,100,0.18); }
+    .card-2 .tag { background: rgba(100,185,155,0.1); color: rgba(100,185,155,0.85); border: 1px solid rgba(100,185,155,0.18); }
+    .card-3 .tag { background: rgba(100,165,210,0.1); color: rgba(100,165,210,0.85); border: 1px solid rgba(100,165,210,0.18); }
+    .card-4 .tag { background: rgba(200,130,190,0.1); color: rgba(200,130,190,0.85); border: 1px solid rgba(200,130,190,0.18); }
+
+    .card-1:hover .tag { background: rgba(232,168,100,0.18); }
+    .card-2:hover .tag { background: rgba(100,185,155,0.18); }
+    .card-3:hover .tag { background: rgba(100,165,210,0.18); }
+    .card-4:hover .tag { background: rgba(200,130,190,0.18); }
+
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 12px;
+    }
+
+    .cta { display: flex; align-items: center; gap: 10px; }
+
+    .cta-line {
+      height: 1px; width: 18px; border-radius: 1px; flex-shrink: 0;
+      transition: width 0.26s cubic-bezier(0.34,1.5,0.64,1);
+    }
+
+    .card:hover .cta-line { width: 30px; }
+
+    .card-1 .cta-line { background: #E8A864; }
+    .card-2 .cta-line { background: #64B99B; }
+    .card-3 .cta-line { background: #64A5D2; }
+    .card-4 .cta-line { background: #C882BE; }
+
+    .cta-text {
+      font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; font-weight: 500;
+    }
+
+    .card-1 .cta-text { color: #E8A864; }
+    .card-2 .cta-text { color: #64B99B; }
+    .card-3 .cta-text { color: #64A5D2; }
+    .card-4 .cta-text { color: #C882BE; }
+
+    .arrow-box {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, transform 0.26s cubic-bezier(0.34,1.5,0.64,1);
+    }
+
+    .card:hover .arrow-box {
+      border-color: rgba(255,255,255,0.25);
+      transform: translate(2px, -2px);
+    }
+
+    /* ── BOTTOM BAR ── */
+    .bottombar {
+      display: flex; justify-content: center; align-items: center; gap: 18px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 1.1s forwards;
+    }
+
+    .fn-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 10.5px; color: rgba(255,255,255,0.3);
+      letter-spacing: 0.06em;
+    }
+
+    .fn-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.22); }
+    .fn-sep { width: 1px; height: 10px; background: rgba(255,255,255,0.1); }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.8); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      html, body { overflow: auto; }
+      .page { height: auto; min-height: 100vh; padding: 24px 20px; }
+      .cards { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 480px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg bg-gradient"></div>
+  <div class="bg bg-grid"></div>
+
+  <div class="page">
+
+    <div class="topbar">
+      <span class="source-badge">Philippine Statistics Authority · PSADA</span>
+      <span class="year-badge">2018 – 2024</span>
+    </div>
+
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <span class="e-rule"></span>
+        A Data Story on
+        <span class="e-rule"></span>
+      </div>
+      <h1 class="hero-title">Financial Vulnerability<br><em>in the Philippines</em></h1>
+      <div class="hero-divider">
+        <div class="d-line"></div>
+        <div class="d-dot"></div>
+        <div class="d-line r"></div>
+      </div>
+      <p class="hero-sub">Select a dashboard below to explore the data. Each view presents a different lens on regional financial vulnerability across the archipelago.</p>
+    </div>
+
+    <div class="cards">
+
+      <a class="card card-1" href="#dashboard-1">
+        <div class="card-top">
+          <span class="card-num">01</span>
+          <div class="card-icon">
+            <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
+              <rect x="0" y="0" width="7" height="7" rx="1.5" fill="#E8A864" opacity=".9"/>
+              <rect x="9" y="0" width="7" height="3" rx="1" fill="#E8A864" opacity=".5"/>
+              <rect x="9" y="5" width="7" height="2" rx="1" fill="#E8A864" opacity=".3"/>
+              <rect x="0" y="9" width="16" height="7" rx="1.5" fill="#E8A864" opacity=".28"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-title">Main Overview</div>
+        <p class="card-desc">You will see national RFVI trends, average S-R-E scores, RFVI by location, S-R-E distribution, urban-rural comparison, and cluster type distribution across all regions.</p>
+        <div class="card-tags">
+          <span class="tag">RFVI Trend</span>
+          <span class="tag">S-R-E Scores</span>
+          <span class="tag">Urban vs Rural</span>
+          <span class="tag">Cluster Types</span>
+        </div>
+        <div class="card-footer">
+          <div class="cta">
+            <div class="cta-line"></div>
+            <span class="cta-text">View Dashboard</span>
+          </div>
+          <div class="arrow-box">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a class="card card-2" href="#dashboard-2">
+        <div class="card-top">
+          <span class="card-num">02</span>
+          <div class="card-icon">
+            <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
+              <circle cx="6" cy="4" r="2.4" fill="#64B99B" opacity=".9"/>
+              <path d="M1 13.5c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#64B99B" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".7"/>
+              <circle cx="12.5" cy="5" r="1.7" fill="#64B99B" opacity=".45"/>
+              <path d="M11 13.5c0-1.6.9-3 2.2-3.7" stroke="#64B99B" stroke-width="1.2" stroke-linecap="round" fill="none" opacity=".35"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-title">FV by Sociodemographic Variables</div>
+        <p class="card-desc">You will see how financial vulnerability varies across sex, age group, household size, marital status, and relationship to household head — filterable by region and survey period.</p>
+        <div class="card-tags">
+          <span class="tag">Sex</span>
+          <span class="tag">Age Group</span>
+          <span class="tag">Household Size</span>
+          <span class="tag">Marital Status</span>
+        </div>
+        <div class="card-footer">
+          <div class="cta">
+            <div class="cta-line"></div>
+            <span class="cta-text">View Dashboard</span>
+          </div>
+          <div class="arrow-box">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a class="card card-3" href="#dashboard-3">
+        <div class="card-top">
+          <span class="card-num">03</span>
+          <div class="card-icon">
+            <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
+              <rect x="1" y="5.5" width="14" height="9" rx="1.5" stroke="#64A5D2" stroke-width="1.2" fill="none" opacity=".85"/>
+              <path d="M5 5.5V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5" stroke="#64A5D2" stroke-width="1.2" stroke-linecap="round" fill="none" opacity=".6"/>
+              <line x1="1" y1="10" x2="15" y2="10" stroke="#64A5D2" stroke-width="1.1" opacity=".35"/>
+              <circle cx="8" cy="10" r="1.2" fill="#64A5D2" opacity=".7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-title">FV by Work-related Variables</div>
+        <p class="card-desc">You will see financial vulnerability across employment status, work availability, job indicators, working hours, and other labor-related variables — split into categorical and numeric views.</p>
+        <div class="card-tags">
+          <span class="tag">Employment</span>
+          <span class="tag">Work Availability</span>
+          <span class="tag">Working Hours</span>
+          <span class="tag">Job Indicators</span>
+        </div>
+        <div class="card-footer">
+          <div class="cta">
+            <div class="cta-line"></div>
+            <span class="cta-text">View Dashboard</span>
+          </div>
+          <div class="arrow-box">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a class="card card-4" href="#dashboard-4">
+        <div class="card-top">
+          <span class="card-num">04</span>
+          <div class="card-icon">
+            <svg width="17" height="17" viewBox="0 0 16 16" fill="none">
+              <circle cx="4" cy="11" r="2.8" fill="#C882BE" opacity=".85"/>
+              <circle cx="11" cy="5" r="2.2" fill="#C882BE" opacity=".55"/>
+              <circle cx="13" cy="12" r="1.6" fill="#C882BE" opacity=".38"/>
+              <circle cx="7.5" cy="13.5" r="1.1" fill="#C882BE" opacity=".5"/>
+              <circle cx="9" cy="2.5" r="1" fill="#C882BE" opacity=".35"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-title">Clusters of S-R-E Relationships</div>
+        <p class="card-desc">You will see scatter plots of sensitivity, resilience, and exposure across three cluster groups — Balanced, Exposure-Weighted, and Sensitivity-Weighted — for all municipalities.</p>
+        <div class="card-tags">
+          <span class="tag">Sensitivity vs Resilience</span>
+          <span class="tag">Resilience vs Exposure</span>
+          <span class="tag">3 Clusters</span>
+        </div>
+        <div class="card-footer">
+          <div class="cta">
+            <div class="cta-line"></div>
+            <span class="cta-text">View Dashboard</span>
+          </div>
+          <div class="arrow-box">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="bottombar">
+      <div class="fn-item"><div class="fn-dot"></div>Source: PSA Data Repository (PSADA)</div>
+      <div class="fn-sep"></div>
+      <div class="fn-item"><div class="fn-dot"></div>17 Regions · All Provinces</div>
+      <div class="fn-sep"></div>
+      <div class="fn-item"><div class="fn-dot"></div>Regional Financial Vulnerability Index</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
