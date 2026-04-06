@@ -23,3 +23,13 @@ streamlit run app.py
 ```
 
 ## Deploy (Streamlit Community Cloud)
+
+1. Push this folder to a GitHub repo
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Connect repo → set **Main file path** to `app.py`
+4. Deploy
+
+## Swap dashboards
+
+Edit `config.py` → `DASHBOARDS` list.  
+Each entry needs: `id` (Tableau sheet name), `label`, `description`, `tags`.

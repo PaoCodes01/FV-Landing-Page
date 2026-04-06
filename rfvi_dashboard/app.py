@@ -1,21 +1,21 @@
 """
-app.py — RFVI Dashboard wrapper.
-Layout: header (54px) + embed + footer (36px) = full viewport, no scroll.
+app.py — RFVI Dashboard.
+Single components.html() call: app bar (48px) + embed (EMBED_H px).
+No st.markdown for layout — avoids Streamlit HTML sanitization entirely.
 
 Run:  py -m streamlit run app.py
-
-EMBED_H: set to (your screen height) minus 90px.
-e.g. 1080p screen → 1080 - 90 = 990. At 80% zoom that feels like ~810.
 """
 
 import streamlit as st
 import streamlit.components.v1 as components
 
 from config import PAGE_ICON, PAGE_TITLE, TABLEAU_VIZ_NAME
-from components import footer_html, header_html, tableau_embed_html
+from components import full_embed_html
 from styles import get_styles
 
-EMBED_H = 850
+BAR_H   = 48
+EMBED_H = 900
+TOTAL_H = BAR_H + EMBED_H
 
 st.set_page_config(
     page_title=PAGE_TITLE,
@@ -24,11 +24,12 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# Only use st.markdown for the Streamlit chrome-stripping CSS — no layout HTML
 st.markdown(get_styles(), unsafe_allow_html=True)
-st.markdown(header_html(), unsafe_allow_html=True)
+
+# Everything visual lives inside this one sandboxed component
 components.html(
-    tableau_embed_html(viz_name=TABLEAU_VIZ_NAME, height_px=EMBED_H),
-    height=EMBED_H,
+    full_embed_html(viz_name=TABLEAU_VIZ_NAME, embed_height=EMBED_H),
+    height=TOTAL_H,
     scrolling=False,
 )
-st.markdown(footer_html(), unsafe_allow_html=True)
