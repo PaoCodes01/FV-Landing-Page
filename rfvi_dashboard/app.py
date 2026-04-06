@@ -1,6 +1,11 @@
 """
-app.py — RFVI Dashboard.
+app.py — RFVI Dashboard wrapper.
+Layout: header (54px) + embed + footer (36px) = full viewport, no scroll.
+
 Run:  py -m streamlit run app.py
+
+EMBED_H: set to (your screen height) minus 90px.
+e.g. 1080p screen → 1080 - 90 = 990. At 80% zoom that feels like ~810.
 """
 
 import streamlit as st
@@ -10,7 +15,7 @@ from config import PAGE_ICON, PAGE_TITLE, TABLEAU_VIZ_NAME
 from components import footer_html, header_html, tableau_embed_html
 from styles import get_styles
 
-EMBED_H = 840   # adjust up/down ~20px if embed cuts off or leaves gap
+EMBED_H = 850
 
 st.set_page_config(
     page_title=PAGE_TITLE,

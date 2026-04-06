@@ -1,21 +1,28 @@
 """
 components.py — Header, footer, and Tableau embed HTML.
+No author credit. No redundant stats. Matches landing page tone.
 """
 
-from config import AUTHOR, COVERAGE, DATA_SOURCE
+from config import COVERAGE, DATA_SOURCE
 
 
 def header_html() -> str:
     return """
 <div class="rfvi-hdr">
-  <h1 class="rfvi-title">
-    Financial Vulnerability &nbsp;<em>in the Philippines</em>
-  </h1>
-  <div class="rfvi-right">
-    <span class="rfvi-pill"><strong>17</strong> regions</span>
-    <span class="rfvi-pill"><strong>37.7%</strong> avg vulnerability</span>
-    <span class="rfvi-pill"><strong>2018 – 2024</strong></span>
-    <span class="rfvi-pill">PSA · Labour Force Survey</span>
+  <div class="rfvi-hdr-inner">
+    <div class="rfvi-hdr-left">
+      <span class="rfvi-eyebrow">A data story on</span>
+      <h1 class="rfvi-title">
+        Financial Vulnerability &nbsp;<em>in the Philippines</em>
+      </h1>
+    </div>
+    <div class="rfvi-hdr-right">
+      <span class="rfvi-pill"><strong>17</strong> regions</span>
+      <div class="rfvi-sep"></div>
+      <span class="rfvi-pill"><strong>2018 – 2024</strong></span>
+      <div class="rfvi-sep"></div>
+      <span class="rfvi-pill">PSA · Labour Force Survey</span>
+    </div>
   </div>
 </div>
 """
@@ -24,39 +31,50 @@ def header_html() -> str:
 def footer_html() -> str:
     return f"""
 <div class="rfvi-ftr">
-  <span><strong>Source</strong> &nbsp;{DATA_SOURCE} &nbsp;·&nbsp; {COVERAGE}</span>
-  <span>By <strong>{AUTHOR}</strong> &nbsp;·&nbsp; Tableau Public</span>
+  <div class="rfvi-ftr-inner">
+    <span><strong>Source</strong> &nbsp; {DATA_SOURCE} &nbsp;·&nbsp; {COVERAGE}</span>
+    <span>Tableau Public &nbsp;·&nbsp; Philippine Statistics Authority</span>
+  </div>
 </div>
 """
 
 
 def tableau_embed_html(viz_name: str, height_px: int) -> str:
-    """Tableau JS API embed with loading shimmer."""
+    """
+    Tableau JS API embed (viz_v1.js + object tag).
+    Background matches landing page dark end of gradient.
+    """
     return f"""<!DOCTYPE html>
 <html>
 <head>
 <style>
   * {{ margin:0; padding:0; box-sizing:border-box; }}
-  html, body {{ width:100%; height:{height_px}px; background:#0E0C0B; overflow:hidden; }}
+  html, body {{
+    width:100%; height:{height_px}px;
+    background: linear-gradient(180deg, #1A0A04 0%, #110601 100%);
+    overflow:hidden;
+  }}
 
   #loader {{
     position:absolute; inset:0; z-index:5;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center; gap:1rem;
-    background:#0E0C0B;
+    background: linear-gradient(180deg, #1A0A04 0%, #110601 100%);
     transition:opacity 0.5s ease;
   }}
   .ld-label {{
     font-family:Georgia,serif; font-style:italic;
-    font-size:1rem; color:#7A706A; letter-spacing:0.02em;
+    font-size:1rem; color:rgba(255,255,255,0.25);
+    letter-spacing:0.04em;
   }}
   .ld-bar {{
-    width:100px; height:2px; background:#2C2420;
+    width:80px; height:2px;
+    background:rgba(255,255,255,0.08);
     border-radius:2px; overflow:hidden;
   }}
   .ld-bar::after {{
     content:''; display:block; height:100%; width:30%;
-    background:#C94C1F; border-radius:2px;
+    background:#CA4010; border-radius:2px;
     animation:sweep 1.3s ease-in-out infinite;
   }}
   @keyframes sweep {{
@@ -70,7 +88,7 @@ def tableau_embed_html(viz_name: str, height_px: int) -> str:
 </head>
 <body>
   <div id="loader">
-    <p class="ld-label">Loading…</p>
+    <p class="ld-label">Loading dashboard…</p>
     <div class="ld-bar"></div>
   </div>
 
@@ -98,8 +116,8 @@ def tableau_embed_html(viz_name: str, height_px: int) -> str:
       obj.style.width  = "100%";
       obj.style.height = "{height_px}px";
 
-      var s   = document.createElement("script");
-      s.src   = "https://public.tableau.com/javascripts/api/viz_v1.js";
+      var s  = document.createElement("script");
+      s.src  = "https://public.tableau.com/javascripts/api/viz_v1.js";
       s.onload = function() {{
         var loader = document.getElementById("loader");
         setTimeout(function() {{
