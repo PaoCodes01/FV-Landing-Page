@@ -1,6 +1,5 @@
 """
-styles.py — Only strips Streamlit chrome. No layout CSS here.
-All layout lives inside components.html() where it has full HTML support.
+styles.py — Strips Streamlit chrome only. All visual design is in components.py.
 """
 
 _CSS = """
@@ -21,7 +20,7 @@ html, body,
   margin: 0 !important;
   padding: 0 !important;
   max-width: 100% !important;
-  background: #0E0A08 !important;
+  background: #0A1628 !important;
 }
 </style>
 """
