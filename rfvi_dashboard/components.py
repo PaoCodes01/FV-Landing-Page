@@ -17,18 +17,14 @@ def full_embed_html(viz_name: str, embed_height: int) -> str:
     total_h = bar_h + embed_height
 
     return f"""<!DOCTYPE html>
-<html data-theme="dark">
+<html>
 <head>
 <meta charset="UTF-8">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap');
 
-/* ── Tokens ── */
 :root {{
-  --bar-h: {bar_h}px;
-}}
-
-[data-theme="dark"] {{
+  --bar-h:      {bar_h}px;
   --bg:         linear-gradient(160deg, #0F2240 0%, #0A1628 55%, #071020 100%);
   --bg-solid:   #0A1628;
   --embed-bg:   #071020;
@@ -44,9 +40,6 @@ def full_embed_html(viz_name: str, embed_height: int) -> str:
   --btn-hover-bg:     rgba(200,168,75,0.16);
   --btn-hover-border: rgba(200,168,75,0.55);
   --btn-hover-text:   #E2C46A;
-  --toggle-bg:  rgba(255,255,255,0.06);
-  --toggle-border: rgba(255,255,255,0.12);
-  --toggle-icon: rgba(232,228,217,0.55);
   --accent-bar: linear-gradient(180deg,#C8A84B 0%,#E2C46A 40%,#C8A84B 100%);
   --circle-stroke: rgba(200,170,90,0.07);
   --loader-bg:  #071020;
@@ -54,39 +47,19 @@ def full_embed_html(viz_name: str, embed_height: int) -> str:
   --loader-bar-bg: rgba(255,255,255,0.06);
 }}
 
-[data-theme="light"] {{
-  --bg:         linear-gradient(160deg, #F0EBE0 0%, #FAF7F2 55%, #FFFDF8 100%);
-  --bg-solid:   #F5F2EB;
-  --embed-bg:   #FFFDF8;
-  --bar-bg:     #F0EBE0;
-  --bar-border: rgba(139,110,40,0.18);
-  --text:       #1A2A3A;
-  --text-dim:   rgba(26,42,58,0.45);
-  --gold:       #8B6E28;
-  --gold-dim:   rgba(139,110,40,0.55);
-  --btn-bg:     rgba(139,110,40,0.08);
-  --btn-border: rgba(139,110,40,0.30);
-  --btn-text:   rgba(139,110,40,0.80);
-  --btn-hover-bg:     rgba(139,110,40,0.15);
-  --btn-hover-border: rgba(139,110,40,0.55);
-  --btn-hover-text:   #6B5020;
-  --toggle-bg:  rgba(0,0,0,0.05);
-  --toggle-border: rgba(0,0,0,0.10);
-  --toggle-icon: rgba(26,42,58,0.50);
-  --accent-bar: linear-gradient(180deg,#C8A84B 0%,#8B6E28 100%);
-  --circle-stroke: rgba(139,110,40,0.08);
-  --loader-bg:  #FAF7F2;
-  --loader-text: rgba(26,42,58,0.25);
-  --loader-bar-bg: rgba(0,0,0,0.08);
-}}
-
 /* ── Reset ── */
 *, *::before, *::after {{ box-sizing:border-box; margin:0; padding:0; }}
-html, body {{
+html {{
+  width:100%; height:{total_h}px;
+  overflow:hidden;
+  background: var(--bg-solid);
+  transition: background 0.35s ease;
+}}
+body {{
   width:100%; height:{total_h}px;
   overflow:hidden;
   font-family:'Inter', system-ui, sans-serif;
-  background: var(--bg-solid);
+  background: var(--bg);
   transition: background 0.35s ease;
 }}
 
@@ -167,24 +140,6 @@ html, body {{
 /* Right side controls */
 .bar-right {{
   display:flex; align-items:center; gap:0.75rem;
-}}
-
-/* Theme toggle */
-.theme-toggle {{
-  display:inline-flex; align-items:center; justify-content:center;
-  width:32px; height:32px;
-  border:1px solid var(--toggle-border);
-  border-radius:4px;
-  background: var(--toggle-bg);
-  cursor:pointer;
-  transition: background 0.2s, border-color 0.2s;
-  font-size:0.85rem;
-  color: var(--toggle-icon);
-  user-select:none;
-}}
-.theme-toggle:hover {{
-  background: rgba(200,168,75,0.12);
-  border-color: var(--btn-border);
 }}
 
 /* CTA button */
@@ -270,11 +225,6 @@ html, body {{
       </div>
 
       <div class="bar-right">
-        <!-- Light / Dark toggle -->
-        <button class="theme-toggle" id="theme-btn" title="Toggle light/dark mode">
-          🌙
-        </button>
-
         <!-- Only purposeful external action -->
         <a class="cta-link"
            href="{TABLEAU_PUBLIC_URL}"
@@ -315,24 +265,6 @@ html, body {{
 
   <script>
     (function() {{
-      /* ── Theme toggle ── */
-      var html = document.documentElement;
-      var btn  = document.getElementById('theme-btn');
-      var ICONS = {{ dark: '🌙', light: '☀️' }};
-
-      // Persist preference
-      var saved = localStorage.getItem('rfvi-theme') || 'dark';
-      html.setAttribute('data-theme', saved);
-      btn.textContent = saved === 'dark' ? ICONS.dark : ICONS.light;
-
-      btn.addEventListener('click', function() {{
-        var current = html.getAttribute('data-theme');
-        var next    = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        btn.textContent = ICONS[next];
-        localStorage.setItem('rfvi-theme', next);
-      }});
-
       /* ── Tableau embed ── */
       var obj = document.querySelector('#viz object');
       obj.style.width  = '100%';
