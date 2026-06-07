@@ -225,7 +225,15 @@ body {{
       </div>
 
       <div class="bar-right">
-        <!-- Only purposeful external action -->
+        <!-- GitHub repo -->
+        <a class="cta-link"
+           href="https://github.com/clemweb3/Undergraduate-Thesis-Repository"
+           target="_blank"
+           rel="noopener noreferrer">
+          GitHub Repo
+          <span class="cta-arrow">↗</span>
+        </a>
+        <!-- Tableau Public -->
         <a class="cta-link"
            href="{TABLEAU_PUBLIC_URL}"
            target="_blank"
